@@ -1,17 +1,10 @@
 import { Routes, Route, Outlet, Link } from "react-router-dom";
+import { useState, useEffect } from 'react';
 
 export default function App() {
   return (
     <div>
       <h1>CSCI 3130 Lab 2</h1>
-
-      <p>
-        This example demonstrates some of the core features of React Router
-        including nested <code>&lt;Route&gt;</code>s,{" "}
-        <code>&lt;Outlet&gt;</code>s, <code>&lt;Link&gt;</code>s, and using a
-        "*" route (aka "splat route") to render a "not found" page when someone
-        visits an unrecognized URL.
-      </p>
 
       {/* Routes nest inside one another. Nested route paths build upon
             parent route paths, and nested route elements render inside
@@ -20,19 +13,17 @@ export default function App() {
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />} />
           <Route path="about" element={<About />} />
-          <Route path="dashboard" element={<Dashboard />} />
-
-          {/* Using path="*"" means "match anything", so this route
-                acts like a catch-all for URLs that we don't have explicit
-                routes for. */}
-          <Route path="*" element={<NoMatch />} />
+          <Route path="contact" element={<Contact />} />
         </Route>
       </Routes>
     </div>
   );
 }
 
+
 function Layout() {
+  const [visits, setCount] = useState(1);
+
   return (
     <div>
       {/* A "layout route" is a good place to put markup you want to
@@ -40,16 +31,13 @@ function Layout() {
       <nav>
         <ul>
           <li>
-            <Link to="/">Home</Link>
+            <Link to="/" onClick={() => setCount(visits + 1)}>Home</Link>
           </li>
           <li>
             <Link to="/about">About</Link>
           </li>
           <li>
-            <Link to="/dashboard">Dashboard</Link>
-          </li>
-          <li>
-            <Link to="/nothing-here">Nothing Here</Link>
+            <Link to="/contact">Contact</Link>
           </li>
         </ul>
       </nav>
@@ -60,6 +48,8 @@ function Layout() {
           so you can think about this <Outlet> as a placeholder for
           the child routes we defined above. */}
       <Outlet />
+
+      <p>Home page visited {visits} times</p>
     </div>
   );
 }
@@ -67,7 +57,10 @@ function Layout() {
 function Home() {
   return (
     <div>
-      <h2>Home</h2>
+      <h2>Welcome to Home Page</h2>
+
+      <p>Created by: Alyssa Motas</p>
+      <p>Banner ID: B00858853</p>
     </div>
   );
 }
@@ -75,26 +68,16 @@ function Home() {
 function About() {
   return (
     <div>
-      <h2>About</h2>
+      <h2>Welcome to About Page</h2>
     </div>
   );
 }
 
-function Dashboard() {
+function Contact() {
   return (
     <div>
-      <h2>Dashboard</h2>
+      <h2>Welcome to Contact Page</h2>
     </div>
   );
 }
 
-function NoMatch() {
-  return (
-    <div>
-      <h2>Nothing to see here!</h2>
-      <p>
-        <Link to="/">Go to the home page</Link>
-      </p>
-    </div>
-  );
-}
