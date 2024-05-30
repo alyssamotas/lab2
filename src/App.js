@@ -14,6 +14,7 @@ export default function App() {
           <Route index element={<Home />} />
           <Route path="about" element={<About />} />
           <Route path="contact" element={<Contact />} />
+          <Route path="*" element={<NoMatch />} />
         </Route>
       </Routes>
     </div>
@@ -77,6 +78,17 @@ function Contact() {
   return (
     <div>
       <h2>Welcome to Contact Page</h2>
+    </div>
+  );
+}
+
+function NoMatch() {
+  return (
+    <div>
+      <h2>Nothing to see here!</h2>
+      <p>
+        <Link to="/">Go to the home page</Link>
+      </p>
     </div>
   );
 }
